@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,6 +9,7 @@ const Login = () => {
   const [values, setValues] = useState({});
   const [cookies, setCookies] = useCookies(['accessToken', 'userId', 'email']);
   const dispatch = useDispatch();
+  const router = useRouter();
 
   // user redux
   const auth = useSelector((state) => state.auth);
@@ -31,6 +33,7 @@ const Login = () => {
         setCookies('email', email, { maxAge: 60000 });
         // set redux to logged in
         dispatch(setLogin(accessToken));
+        router.replace('/');
       })
       .catch((err) => alert('Login lu salah coy'));
   };
